@@ -1,10 +1,9 @@
 const express = require('express')
 const club = require('../models/club')
-let Club = require('../models/club');
-
+let Club = require('../models/club')
 const router = express.Router()
 
-//ROUTE FOR READ
+
 router.get('/',(req, res) =>{
     club.find((err, docs) =>{
         if(err)throw err;
@@ -14,7 +13,7 @@ router.get('/',(req, res) =>{
 })
 });
 
-//ROUTE FOR CREATE
+
 router.post('/add',(req,res,next) =>{
     const {name, players, coach} =req.body;
 
@@ -37,7 +36,7 @@ club.save(err =>{
 
 });
 
-//ROUTE TO SHOW UPDATE ELEMENT
+
 router.get('/edit/:id', (req,res, next)=>{
     console.log(req.params.id);
     club.findOneAndUpdate({_id: req.params.id }, req.body, {new:true}, (err, docs) => {
@@ -51,21 +50,22 @@ router.get('/edit/:id', (req,res, next)=>{
 
 })
 
-//ROUTE TO UPDATE ELEMENT
+
 router.post('/edit/:id', (req, res,next) =>{
     club.findByIdAndUpdate({_id:req.params.id}, req.body,(err,docs) =>{
         if(err){
             console.log("something went wrong to update your data");
-            next(err)                 ;
+            next(err) ;
         }else{
             console.log("updated successfully");
             res.redirect('/');
 
         }
     });
-} );
+});
 
-//ROUTE TO DELETE ITEM
+
+
 router.get('/delete/:id',(req,res,next)=>{
     club.findByIdAndDelete({_id:req.params.id},(err,docs)=>{
         if(err){
